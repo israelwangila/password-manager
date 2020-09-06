@@ -15,3 +15,8 @@ from modules.menu import Manager
 def exit_program():
     print(colored("Exiting...", "red"))
     sys.exit()
+
+def start(obj: DataManip):
+    if os.path.isfile("db/masterpassword.json"):
+        with open("db/masterpassword.json", 'r') as jsondata:
+            jfile = json.load(jsondata)
