@@ -49,5 +49,22 @@ def start(obj: DataManip):
             pass
 
         print(colored("lets begin by creating a master password which is none-recoverable, be careful.", "green"))
-        master_password = getpass.getpass("Create a master password for the program: ")
-        second_input = getpass.getpass("Verify your master pasword: ")
+        master_password = getpass.getpass("Create a main password for the program: ")
+        second_input = getpass.getpass("Verify your main pasword: ")
+
+                if master_password == second_input:
+            spinner = Halo(text=colored("initializing base...", "green"), color="green", spinner=obj.dots_)
+            hash_master = sha256(master_password.encode("utf-8")).hexdigest()
+            jfile = {"Master": {}}
+            jfile["Master"] = hash_master
+            with open("db/masterpassword.json", 'w') as jsondata:
+                json.dump(jfile, jsondata, sort_keys=True, indent=4)
+            spinner.stop()
+            print(colored(f"{obj.checkmark_} Restart the program and enter your main password to begin.", "green"))
+        else:
+            print(colored(f"{obj.x_mark_} Passwords do not match. Please try again {obj.x_mark_}", "red"))
+            return start(obj)
+
+if __name__ == "__main__":
+    obj = DataManip()
+    start(obj)
