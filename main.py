@@ -22,4 +22,28 @@ def start(obj: DataManip):
             jfile = json.load(jsondata)
 
                     stored_master_pass = jfile["Master"] # load the saved hashed password
-        master_password = getpass.getpass("Enter Your Master Password: ")
+        master_password = getpass.getpass("Input The Master Password: ")
+
+                # compare the two hashes of inputted password and stored
+        spinner = Halo(text=colored("Unlocking", "green"), color="green", spinner=obj.dots_)
+        if sha256(master_password.encode("utf-8")).hexdigest() == stored_master_pass:
+            print(colored(f"{obj.checkmark_} Thank you! Choose an option below:", "green"))
+            # create instance of Manager class
+            menu = Manager(obj, "db/passwords.json", "db/masterpassword.json", master_password)
+
+                        try:
+                menu.begin()
+            except UserExits:
+                exit_program()
+            except PasswordFileDoesNotExist:
+                print(colored(f"{obj.x_mark_} DB not found. Try adding a password {obj.x_mark_}", "red"))
+
+                        else:
+            print(colored(f"{obj.x_mark_} Master password is incorrect {obj.x_mark_}", "red"))
+            return start(obj)
+
+    else: # First time running program: create a master password
+        try:
+            os.mkdir("db/")
+        except FileExistsError:
+            pass
