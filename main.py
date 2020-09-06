@@ -20,3 +20,6 @@ def start(obj: DataManip):
     if os.path.isfile("db/masterpassword.json"):
         with open("db/masterpassword.json", 'r') as jsondata:
             jfile = json.load(jsondata)
+
+                    stored_master_pass = jfile["Master"] # load the saved hashed password
+        master_password = getpass.getpass("Enter Your Master Password: ")
