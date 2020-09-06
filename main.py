@@ -47,3 +47,7 @@ def start(obj: DataManip):
             os.mkdir("db/")
         except FileExistsError:
             pass
+
+        print(colored("lets begin by creating a master password which is none-recoverable, be careful.", "green"))
+        master_password = getpass.getpass("Create a master password for the program: ")
+        second_input = getpass.getpass("Verify your master pasword: ")
