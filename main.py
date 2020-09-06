@@ -11,3 +11,7 @@ from halo import Halo
 from modules.encryption import DataManip
 from modules.exceptions import UserExits, PasswordFileDoesNotExist
 from modules.menu import Manager
+
+def exit_program():
+    print(colored("Exiting...", "red"))
+    sys.exit()
